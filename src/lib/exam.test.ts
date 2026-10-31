@@ -59,6 +59,16 @@ test('published certification banks pass content validation and the demo is abse
   assert.deepEqual(exams.map((exam) => exam.id), ['dp-300', 'ai-200', 'sc-500', 'sc-300'])
 })
 
+test('AI-200 data domain reflects the Japanese guide and retains its 30% allocation', () => {
+  const exam = exams.find((item) => item.id === 'ai-200')!
+  const dataDomain = exam.domains.find((domain) => domain.id === 'data')!
+  const dataQuestionCount = exam.questions.filter((question) => question.domainId === 'data').length
+
+  assert.deepEqual(dataDomain.weight, { min: 25, max: 30 })
+  assert.equal(dataQuestionCount, 180)
+  assert.equal(dataQuestionCount / exam.questions.length * 100, 30)
+})
+
 test('Japanese question banks explicitly request Japanese Microsoft Learn reference pages', () => {
   for (const id of ['dp-300', 'ai-200', 'sc-500', 'sc-300']) {
     const exam = exams.find((item) => item.id === id)!
