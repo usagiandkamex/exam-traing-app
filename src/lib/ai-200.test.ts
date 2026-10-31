@@ -14,10 +14,10 @@ test('AI-200 is registered as an original certification alongside DP-300', () =>
   assert.deepEqual(validateExam(ai200), [])
 })
 
-test('AI-200 preserves the four official summary ranges and satisfies both published data ranges', () => {
+test('AI-200 preserves the current Japanese summary ranges and satisfies the official data ranges', () => {
   assert.deepEqual(ai200.domains.map(({ id, weight }) => ({ id, weight })), [
     { id: 'containers', weight: { min: 20, max: 25 } },
-    { id: 'data', weight: { min: 30, max: 35 } },
+    { id: 'data', weight: { min: 25, max: 30 } },
     { id: 'integration', weight: { min: 20, max: 25 } },
     { id: 'security-monitoring', weight: { min: 20, max: 25 } },
   ])
@@ -32,18 +32,19 @@ test('AI-200 preserves the four official summary ranges and satisfies both publi
   assert.ok(dataPercentage >= 25 && dataPercentage <= 30)
 })
 
-test('AI-200 records the guide revision, general question-count source and official discrepancy', () => {
-  assert.ok(ai200.description.includes('2026年10月7日'))
+test('AI-200 records the undated guide and conflicting official search result', () => {
+  assert.ok(ai200.description.includes('2026年10月31日'))
   assert.ok(ai200.description.includes('Microsoft認定試験全般の目安'))
+  assert.ok(ai200.description.includes('改訂日・適用日の明記はありません'))
   assert.ok(ai200.usageReview)
   assert.ok(ai200.usageReview.notes.split(/\s+/).some((token) =>
     token === 'https://learn.microsoft.com/en-us/credentials/support/exam-duration-exam-experience'))
-  for (const text of ['30〜35%', '25〜30%', '不一致']) {
+  for (const text of ['30〜35%', '25〜30%', '未確認']) {
     assert.ok(ai200.description.includes(text), text)
     assert.ok(ai200.usageReview.notes.includes(text), text)
   }
-  assert.equal(ai200.blueprint?.reviewedOn, '2026-10-25')
-  assert.equal(ai200.usageReview.reviewedOn, '2026-10-25')
+  assert.equal(ai200.blueprint?.reviewedOn, '2026-10-31')
+  assert.equal(ai200.usageReview.reviewedOn, '2026-10-31')
 })
 
 test('AI-200 questions have distinct prompts and choices with both answer formats in every domain', () => {
