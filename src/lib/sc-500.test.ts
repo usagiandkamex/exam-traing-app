@@ -32,8 +32,8 @@ test('SC-500 preserves the four official domain ranges and the 600-question allo
 })
 
 test('SC-500 distinguishes verification date, general exam count and question language from exam guarantees', () => {
-  assert.equal(sc500.blueprint?.reviewedOn, '2026-10-25')
-  assert.equal(sc500.usageReview?.reviewedOn, '2026-10-25')
+  assert.equal(sc500.blueprint?.reviewedOn, '2026-10-31')
+  assert.equal(sc500.usageReview?.reviewedOn, '2026-10-31')
   assert.ok(sc500.usageReview)
   assert.equal(sc500.usageReview.url, 'https://learn.microsoft.com/ja-jp/credentials/support/certification-exam-candidate-agreement')
   assert.ok(sc500.usageReview.notes.split(/\s+/).some((token) =>

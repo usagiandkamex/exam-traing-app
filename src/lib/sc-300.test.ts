@@ -35,18 +35,18 @@ test('SC-300 preserves official summary ranges and satisfies the conflicting aut
   assert.equal(authenticationPercentage, 25)
 })
 
-test('SC-300 discloses its upcoming revision, general count guidance and unresolved official discrepancy', () => {
+test('SC-300 discloses the measured-skills date, language caveat and official discrepancy', () => {
   assert.ok(sc300.usageReview)
-  for (const text of ['2026年10月28日', '適用予定', 'Microsoft認定試験全般', 'SC-300', '固定問題数', '25〜30%', '20〜25%', '不一致']) {
+  for (const text of ['2026年10月28日', '2026-10-31', 'Microsoft認定試験全般', 'SC-300', '固定問題数', '25〜30%', '20〜25%', '不一致']) {
     assert.ok(sc300.description.includes(text), text)
   }
-  for (const text of ['2026年10月28日', '適用予定', '25〜30%', '20〜25%', '不一致', '未確認', '人による']) {
+  for (const text of ['2026年10月28日', '2026-10-31', '25〜30%', '20〜25%', '不一致', '未確認', '人による']) {
     assert.ok(sc300.usageReview.notes.includes(text), text)
   }
   assert.ok(sc300.usageReview.notes.split(/\s+/).some((token) =>
     token === 'https://learn.microsoft.com/en-us/credentials/support/exam-duration-exam-experience'))
-  assert.equal(sc300.blueprint?.reviewedOn, '2026-10-25')
-  assert.equal(sc300.usageReview.reviewedOn, '2026-10-25')
+  assert.equal(sc300.blueprint?.reviewedOn, '2026-10-31')
+  assert.equal(sc300.usageReview.reviewedOn, '2026-10-31')
 })
 
 test('SC-300 has distinct Japanese questions and choices with both answer formats in every domain', () => {
